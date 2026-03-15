@@ -4,6 +4,13 @@
 #include <math.h>
 
 
+#define window_width 1000
+#define window_height 800
+#define hud_size 40
+#define horizontal_bar_height 10
+
+
+
 typedef struct{
 
     SDLite_Text *score_text; 

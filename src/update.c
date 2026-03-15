@@ -26,7 +26,7 @@ void update_multiplier(Appstate *state){
 
     SDL_FRect render_rect = {0};
     SDLite_Text_Get_RenderRect(state->speed_multiplier.multiplier_text, &render_rect);
-    SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (1000 - render_rect.w) / 4, 0);
+    SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (window_width - render_rect.w) / 4, hud_size / 4);
     
 }
 
@@ -35,6 +35,8 @@ int update(Appstate *state){
 
     if(SDLite_Time_Is_FPSUpdated(state->time))
         update_fps(state->fps_text, state->time);
+
+    update_multiplier(state);
 
     return 0;
 }

@@ -5,14 +5,10 @@
 #include "SDL3/SDL_main.h"
 
 
-const int window_width = 1000;
-const int window_height = 800;
-const int hud_size = 40;
-const int horizontal_bar_height = 10;
 
 
 
-int init_text(Appstate *state, int hud_size){
+int init_text(Appstate *state){
 
 
     state->player_one.score = 0;
@@ -42,7 +38,7 @@ int init_text(Appstate *state, int hud_size){
     SDLite_Text_Get_RenderRect(state->fps_text, &render_rect);
     SDLite_Text_SetPosition(state->fps_text, (window_width - render_rect.w) / 4, 0);
     SDLite_Text_Get_RenderRect(state->speed_multiplier.multiplier_text, &render_rect);
-    SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (window_width - render_rect.w) / 4, 0);
+    SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (window_width - render_rect.w) / 4, hud_size / 4);
 
     return 0;
 }
@@ -101,7 +97,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     }
 
 
-    if(init_text(state, hud_size)){
+    if(init_text(state)){
         return SDL_APP_FAILURE;
     }
 
