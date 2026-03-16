@@ -15,6 +15,7 @@ SDL_AppResult SDL_AppIterate(void *appstate){
 
     render(state);
 
+
     SDLite_Input_UpdateAllPrev(state->input);
     SDLite_TimeFunctions(state->time);
 

@@ -7,7 +7,7 @@
 #define window_width 1000
 #define window_height 800
 #define hud_size 40
-#define horizontal_bar_height 10
+#define horizontal_bar_height 5
 
 
 
