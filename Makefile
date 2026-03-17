@@ -14,6 +14,9 @@ OPT_FLAG = -O2 -s
 DEBUG_FLAG = -g
 
 
+.PHONY: default opt debug_build opt_build run
+
+
 default: debug_build run
 
 opt: opt_build run

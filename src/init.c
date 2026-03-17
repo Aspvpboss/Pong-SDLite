@@ -2,6 +2,7 @@
 #define SDL_MAIN_USE_CALLBACKS 1
 
 #include "init.h"
+#include "update.h"
 #include "SDL3/SDL_main.h"
 
 
@@ -27,12 +28,8 @@ int init_text(Appstate *state){
         return 1;
     }
 
-    SDL_FRect render_rect = {0};
-    SDLite_Text_Get_RenderRect(state->fps_text, &render_rect);
-    SDLite_Text_SetPosition(state->fps_text, (window_width - render_rect.w) / 4, 0);
-
-    SDLite_Text_Get_RenderRect(state->speed_multiplier.multiplier_text, &render_rect);
-    SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (window_width - render_rect.w) / 4, hud_size / 4);
+    center_text(state->fps_text, 0);
+    center_text(state->speed_multiplier.multiplier_text, hud_size / 4);
 
     return 0;
 }
