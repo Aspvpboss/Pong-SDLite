@@ -16,27 +16,21 @@ int init_text(Appstate *state){
     state->speed_multiplier.multiplier = 1.0f;
    
     
-    state->fps_text = SDLite_CreateText(
-        state->display, "FPS: 0", "assets/default.ttf", hud_size / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    
-    state->speed_multiplier.multiplier_text = SDLite_CreateText(
-        state->display, "x1.0", "assets/default.ttf", hud_size / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    
-    state->player_one.score_text = SDLite_CreateText(
-        state->display, NULL, "assets/default.ttf", hud_size, 0, 0, (SDL_Color){255, 255, 255, 255});
-    
-    state->player_two.score_text = SDLite_CreateText(
-        state->display, NULL, "assets/default.ttf", hud_size, 0, 0, (SDL_Color){255, 255, 255, 255});
+    state->fps_text = SDLite_CreateText(state->display, "FPS: 0", "assets/default.ttf", hud_size / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    state->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", "assets/default.ttf", hud_size / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    state->player_one.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", hud_size, 0, 0, (SDL_Color){255, 255, 255, 255});
+    state->player_two.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", hud_size, 0, 0, (SDL_Color){255, 255, 255, 255});
 
 
     if(!state->player_one.score_text || !state->player_two.score_text || !state->speed_multiplier.multiplier_text || !state->fps_text){
         SDL_Log("Error: %s\n", SDL_GetError());
         return 1;
     }
-       
+
     SDL_FRect render_rect = {0};
     SDLite_Text_Get_RenderRect(state->fps_text, &render_rect);
     SDLite_Text_SetPosition(state->fps_text, (window_width - render_rect.w) / 4, 0);
+
     SDLite_Text_Get_RenderRect(state->speed_multiplier.multiplier_text, &render_rect);
     SDLite_Text_SetPosition(state->speed_multiplier.multiplier_text, (window_width - render_rect.w) / 4, hud_size / 4);
 
@@ -77,6 +71,14 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
     }
+
+    SDL_Renderer *renderer = SDLite_Display_GetSDLRenderer(state->display);
+    if(!renderer){
+        SDL_Log("Error: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+    SDL_SetRenderScale(renderer, 1.0f, 1.0f);
+
 
     state->time = SDLite_CreateTime(-1);
     if(!state->time){

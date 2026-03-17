@@ -11,9 +11,11 @@ SDL_AppResult SDL_AppIterate(void *appstate){
     if(frame_events(state))
         return SDL_APP_SUCCESS;   
 
-    update(state);
+    if(update(state))
+        return SDL_APP_FAILURE; 
 
-    render(state);
+    if(render(state))
+        return SDL_APP_FAILURE;
 
 
     SDLite_Input_UpdateAllPrev(state->input);
