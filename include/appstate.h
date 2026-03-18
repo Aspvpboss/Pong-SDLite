@@ -15,8 +15,24 @@ typedef struct{
 
     SDLite_Text *score_text; 
     int score;
+    TTF_HorizontalAlignment text_alignment;
     
 } Score;
+
+typedef struct{
+
+    char filler;
+
+} Paddle;
+
+
+typedef struct{
+
+    Score score;
+    Paddle paddle; 
+
+} Player;
+
 
 typedef struct{
 
@@ -27,19 +43,30 @@ typedef struct{
 
 typedef struct{
 
-    int scale;
-    SDL_Rect ball_arena;
+    SDLite_Sprite *sprite;
+    double x_velocity;
+    double y_velocity;
+    double x_speed;
+    double y_speed;
+
+} Pong_Ball;
+
+
+
+typedef struct{
 
     SDLite_Display *display;
     SDLite_Time *time;
     SDLite_Input *input;
 
-    SDLite_Text *fps_text;
-    Score player_one;
-    Score player_two;
-    Speed_Multiplier speed_multiplier;
+    Player player_one;
+    Player player_two;
 
     SDLite_Sprite *horizontal_bar; 
+    SDLite_Text *fps_text;
+    Speed_Multiplier speed_multiplier;
     
+    SDL_FRect ball_arena;
+    Pong_Ball ball;
 
 } Appstate;
