@@ -2,7 +2,7 @@
 
 
 
-void center_text(SDLite_Text *text, int y){
+void center_text(SDLite_Text *text, int y, int window_width){
 
     SDL_FRect render_rect = {0};
     SDLite_Text_Get_RenderRect(text, &render_rect);
@@ -11,13 +11,13 @@ void center_text(SDLite_Text *text, int y){
 }
 
 
-void update_fps(SDLite_Text *text, SDLite_Time *time){
+void update_fps(Appstate *state, SDLite_Text *text, SDLite_Time *time){
 
     char fps_string[20];
     snprintf(fps_string, sizeof(fps_string), "FPS: %.1f", SDLite_Time_GetFPS(time));
 
     SDLite_Text_SetString(text, fps_string);
-    center_text(text, 0);
+    center_text(text, 0, state->window_width);
     
 }
 
@@ -29,11 +29,11 @@ void update_multiplier(Appstate *state){
     
     SDLite_Text_SetString(state->speed_multiplier.multiplier_text, multiplier_string);
 
-    center_text(state->speed_multiplier.multiplier_text, hud_size / 4); 
+    center_text(state->speed_multiplier.multiplier_text, hud_size / 4, state->window_width); 
 }
 
 
-void update_score(Score *player_score, int new_score){
+void update_score(Score *player_score, int new_score, int window_width){
 
     player_score->score = new_score;
 
@@ -65,9 +65,10 @@ void update_ball_position(Appstate *state){
     SDLite_Sprite_Get_RenderRect(state->ball.sprite, &current_position);
 
     double delta_time = SDLite_Time_GetDT(state->time);
+    double speed_multiplier = state->speed_multiplier.multiplier;
 
-    current_position.x += state->ball.x_velocity * state->ball.x_speed * delta_time;
-    current_position.y += state->ball.y_velocity * state->ball.y_speed * delta_time;
+    current_position.x += state->ball.x_velocity * state->ball.x_speed * delta_time * speed_multiplier;
+    current_position.y += state->ball.y_velocity * state->ball.y_speed * delta_time * speed_multiplier;
 
     if(current_position.x < arena->x){
         current_position.x = arena->x;
@@ -78,11 +79,15 @@ void update_ball_position(Appstate *state){
     }   
 
     if(current_position.y < arena->y){
+
         current_position.y = arena->y;
         state->ball.y_velocity *= -1;
+
     } else if(current_position.y + current_position.h > arena->y + arena->h){
+
         current_position.y = arena->y + arena->h - current_position.h;
         state->ball.y_velocity *= -1;
+
     }
 
     SDLite_Sprite_Set_Position(state->ball.sprite, (SDL_FPoint){current_position.x, current_position.y});
@@ -95,7 +100,7 @@ void update_ball_position(Appstate *state){
 int update(Appstate *state){
 
     if(SDLite_Time_Is_FPSUpdated(state->time))
-        update_fps(state->fps_text, state->time);
+        update_fps(state, state->fps_text, state->time);
 
     update_ball_position(state);
     

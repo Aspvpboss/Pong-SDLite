@@ -5,9 +5,10 @@
 int update(Appstate *state);
 
 
-void center_text(SDLite_Text *text, int y);
-void update_score(Score *player_score, int new_score);
+void center_text(SDLite_Text *text, int y, int window_width);
+void update_score(Score *player_score, int new_score, int window_width);
 void update_multiplier(Appstate *state);
+void update_fps(Appstate *state, SDLite_Text *text, SDLite_Time *time);
 
 
 

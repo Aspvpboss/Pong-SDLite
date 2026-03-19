@@ -4,13 +4,14 @@
 #include "init.h"
 #include "update.h"
 #include "SDL3/SDL_main.h"
-
+#include <time.h>
 
 
 
 
 int init_text(Appstate *state){
 
+    int window_width = state->window_width;
 
     state->player_one.score.score = 0;
     state->player_one.score.text_alignment = TTF_HORIZONTAL_ALIGN_LEFT;
@@ -30,13 +31,13 @@ int init_text(Appstate *state){
         return 1;
     }
 
-    update_score(&state->player_one.score, 0);
-    update_score(&state->player_two.score, 244); 
+    update_score(&state->player_one.score, 0, window_width);
+    update_score(&state->player_two.score, 244, window_width); 
 
     update_multiplier(state);
 
-    center_text(state->fps_text, 0);
-    center_text(state->speed_multiplier.multiplier_text, hud_size / 4);
+    center_text(state->fps_text, 0, window_width);
+    center_text(state->speed_multiplier.multiplier_text, hud_size / 4, window_width);
 
     return 0;
 }
@@ -56,12 +57,16 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     state->fps_text = NULL;
     state->input = NULL;
     state->time = NULL;
+
     state->display = NULL;
+    state->window_height = window_start_height;
+    state->window_width = window_start_width;
+    int window_width = state->window_width;
+    int window_height = state->window_height;
+
     state->player_one.score.score_text = NULL;
     state->player_two.score.score_text = NULL;
     state->speed_multiplier.multiplier_text = NULL;
-    state->horizontal_bar = NULL;
-
 
 
     state->ball_arena.x = 0;
@@ -75,14 +80,20 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     state->ball.y_speed = 350.0f;
     state->ball.sprite = NULL;
 
-    state->display = SDLite_CreateDisplay("Pong", window_width, window_height, SDL_WINDOW_MAXIMIZED);
+    state->display = SDLite_CreateDisplay("Pong", window_width, window_height, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     if(!state->display){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
+    SDL_Window *window = SDLite_Display_GetSDLWindow(state->display);
+    SDL_SetWindowMinimumSize(window, 500, 200);
+    SDL_DisplayID display_id = SDL_GetPrimaryDisplay();
+    SDL_Rect display_bounds;
+    SDL_GetDisplayBounds(display_id, &display_bounds);
+    SDL_SetWindowMaximumSize(window, display_bounds.w, display_bounds.h); 
 
-    state->time = SDLite_CreateTime(144);
+    state->time = SDLite_CreateTime(-1);
     if(!state->time){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
@@ -94,11 +105,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         return SDL_APP_FAILURE;
     }
 
-    state->horizontal_bar = SDLite_Create_RectSprite((SDL_FRect){0, hud_size, window_width, horizontal_bar_height}, (SDL_Color){255, 255, 255, 255}, true);
-    if(!state->horizontal_bar){
-        SDL_Log("Error: %s\n", SDL_GetError());
-        return SDL_APP_FAILURE;
-    }
+    state->horizontal_bar = (SDL_FRect){0, hud_size, window_width, horizontal_bar_height};
 
     state->ball.sprite = SDLite_Create_RectSprite((SDL_FRect){(state->ball_arena.x + state->ball_arena.w) / 2, (state->ball_arena.y + state->ball_arena.h) / 2, 10, 10}, (SDL_Color){255, 255, 255, 255}, true);
     if(!state->ball.sprite){
@@ -111,7 +118,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         return SDL_APP_FAILURE;
     }
 
-    srand(time());
+    srand(time(NULL));
 
     return SDL_APP_CONTINUE;
 }
