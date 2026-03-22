@@ -128,6 +128,8 @@ Gameplay* init_gameplay(Appstate *state){
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
 
+    gamestate = GAME_PLAYING;
+
     if(SDLite_Init(NULL, NULL, true, false)){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;

@@ -109,6 +109,14 @@ int update(Appstate *state){
 
         update_ball_position(state, state->time);
 
+    } else if(gamestate == GAME_MAIN_MENU){
+
+        // stuff
+
+    } else if(gamestate == GAME_SETTINGS){
+
+        // stuff
+
     }
 
     

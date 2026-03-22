@@ -8,15 +8,30 @@ int render(Appstate *state){
 
     SDLite_DisplayClear(display);
 
-    SDLite_Render_Text(state->fps_text);
-    SDLite_Render_Text(state->player_one.score.score_text);
-    SDLite_Render_Text(state->player_two.score.score_text);
-    SDLite_Render_Text(state->speed_multiplier.multiplier_text);
-    SDLite_Render_Sprite(display, state->ball.sprite);
+    if(gamestate == GAME_PLAYING){
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
-    
-    SDL_RenderFillRect(renderer, &state->horizontal_bar);
+        Gameplay *gameplay = state->gameplay;
+
+        SDLite_Render_Text(gameplay->fps_text);
+        SDLite_Render_Text(gameplay->player_one.score.score_text);
+        SDLite_Render_Text(gameplay->player_two.score.score_text);
+        SDLite_Render_Text(gameplay->speed_multiplier.multiplier_text);
+        SDLite_Render_Sprite(display, gameplay->ball.sprite);
+
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
+        
+        SDL_RenderFillRect(renderer, &gameplay->horizontal_bar);
+        
+    } else if(gamestate == GAME_MAIN_MENU){
+
+
+
+    } else if(gamestate == GAME_SETTINGS){
+
+
+
+    }
+
     
     SDLite_DisplayPresent(display);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
