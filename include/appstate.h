@@ -9,7 +9,7 @@
 #define WINDOW_START_HEIGHT 800
 
 
-typedef struct{
+typedef enum{
 
     GAME_PLAYING,
     GAME_MAIN_MENU,

@@ -115,7 +115,7 @@ Gameplay* init_gameplay(Appstate *state){
     update_score(&gameplay->player_one.score, 0, window_width);
     update_score(&gameplay->player_two.score, 244, window_width); 
 
-    update_multiplier(state);
+    update_multiplier(gameplay, window_width);
 
     center_text(gameplay->fps_text, 0, window_width);
     center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 4, window_width);

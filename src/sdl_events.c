@@ -12,15 +12,33 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
 
         state->window_width = event->window.data1;
         state->window_height = event->window.data2;
+        int window_width = state->window_width;
+        int window_height = state->window_height;
 
-        state->ball_arena.w = state->window_width;
-        state->ball_arena.h = state->window_height - hud_size - horizontal_bar_height;
+        if(gamestate == GAME_PLAYING){
 
-        update_fps(state, state->fps_text, state->time);
-        update_multiplier(state); 
-        update_score(&state->player_one.score, state->player_one.score.score, state->window_width);
-        update_score(&state->player_two.score, state->player_two.score.score, state->window_width);
-        state->horizontal_bar.w = state->window_width;
+            Gameplay *gameplay = state->gameplay;
+
+            gameplay->ball_arena.w = window_width;
+            gameplay->ball_arena.h = window_height - GAMEPLAY_HUD_SIZE - GAMEPLAY_HORIZONTAL_BAR_HEIGHT;
+
+            update_fps(gameplay->fps_text, state->time);
+            center_text(gameplay->fps_text, 0, window_width);
+            update_multiplier(gameplay, window_width); 
+            update_score(&gameplay->player_one.score, gameplay->player_one.score.score, window_width);
+            update_score(&gameplay->player_two.score, gameplay->player_two.score.score, window_width);
+            gameplay->horizontal_bar.w = window_width;
+        
+        } else if(gamestate == GAME_MAIN_MENU){
+
+            // stuff
+
+        } else if(gamestate == GAME_SETTINGS){
+
+            // stuff
+
+        }
+
 
     }
 
