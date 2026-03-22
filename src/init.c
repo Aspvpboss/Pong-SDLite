@@ -6,7 +6,7 @@
 #include "SDL3/SDL_main.h"
 #include <time.h>
 
-
+Gamestate gamestate;
 
 
 int init_text(Appstate *state){

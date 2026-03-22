@@ -8,7 +8,16 @@
 #define hud_size 40
 #define horizontal_bar_height 5
 
- 
+typedef struct{
+
+    GAME_PLAYING,
+    GAME_MAIN_MENU,
+    GAME_SETTINGS
+    
+} Gamestate;
+
+extern Gamestate gamestate;
+
 
 typedef struct{
 
