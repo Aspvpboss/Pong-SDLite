@@ -12,38 +12,14 @@ Gamestate gamestate;
 int init_text(Appstate *state){
 
     int window_width = state->window_width;
-
-    state->player_one.score.score = 0;
-    state->player_one.score.text_alignment = TTF_HORIZONTAL_ALIGN_LEFT;
-    state->player_two.score.score = 0;
-    state->player_two.score.text_alignment = TTF_HORIZONTAL_ALIGN_RIGHT;
-    state->speed_multiplier.multiplier = 1.0f;
-   
-    
-    state->fps_text = SDLite_CreateText(state->display, "FPS: 0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    state->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    state->player_one.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, 0, 0, (SDL_Color){255, 255, 255, 255});
-    state->player_two.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
-
-
-    if(!state->player_one.score.score_text || !state->player_two.score.score_text || !state->speed_multiplier.multiplier_text || !state->fps_text){
-        SDL_Log("Error: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    update_score(&state->player_one.score, 0, window_width);
-    update_score(&state->player_two.score, 244, window_width); 
-
-    update_multiplier(state);
-
-    center_text(state->fps_text, 0, window_width);
-    center_text(state->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 4, window_width);
-
     return 0;
 }
 
 
-int init_appstate(Appstate *state){
+Appstate* init_appstate(){
+
+    Appstate *state = t_malloc(sizeof(Appstate));
+    if(!state) return NULL;
 
     state->gameplay = NULL;
     state->input = NULL;
@@ -79,6 +55,7 @@ int init_appstate(Appstate *state){
         return 1;
     }
 
+    srand(time(NULL));
     
     return 0;
 }
@@ -89,6 +66,7 @@ Gameplay* init_gameplay(Appstate *state){
     Gameplay *gameplay = t_malloc(sizeof(Gameplay));
     if(!gameplay) return NULL;
 
+    
     int window_width = state->window_width;
     int window_height = state->window_height;
 
@@ -108,6 +86,11 @@ Gameplay* init_gameplay(Appstate *state){
     gameplay->ball.y_speed = 350.0f;
     gameplay->ball.sprite = NULL;
 
+    gameplay->player_one.score.score = 0;
+    gameplay->player_one.score.text_alignment = TTF_HORIZONTAL_ALIGN_LEFT;
+    gameplay->player_two.score.score = 0;
+    gameplay->player_two.score.text_alignment = TTF_HORIZONTAL_ALIGN_RIGHT;
+    gameplay->speed_multiplier.multiplier = 1.0f;
 
     gameplay->horizontal_bar = (SDL_FRect){0, GAMEPLAY_HUD_SIZE, window_width, GAMEPLAY_HORIZONTAL_BAR_HEIGHT};
 
@@ -117,10 +100,26 @@ Gameplay* init_gameplay(Appstate *state){
         return SDL_APP_FAILURE;
     }
 
+    
+    gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_one.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_two.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
 
-    if(init_text(state)){
-        return SDL_APP_FAILURE;
+
+    if(!gameplay->player_one.score.score_text || !gameplay->player_two.score.score_text || !gameplay->speed_multiplier.multiplier_text || !gameplay->fps_text){
+        SDL_Log("Error: %s\n", SDL_GetError());
+        return 1;
     }
+
+    update_score(&gameplay->player_one.score, 0, window_width);
+    update_score(&gameplay->player_two.score, 244, window_width); 
+
+    update_multiplier(state);
+
+    center_text(gameplay->fps_text, 0, window_width);
+    center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 4, window_width);
+
 
 
     return gameplay;
@@ -134,20 +133,19 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         return SDL_APP_FAILURE;
     }
 
-    (*appstate) = t_malloc(sizeof(Appstate));
     Appstate *state = (Appstate*)(*appstate);
+    state = init_appstate();
     if(!state){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
     }
 
-    if(init_appstate(state)){
+    state->gameplay = init_gameplay(state);
+    if(!state->gameplay){
         SDL_Log("Error: %s\n", SDL_GetError());
         return SDL_APP_FAILURE;
-    } 
+    }
 
-
-    srand(time(NULL));
 
     return SDL_APP_CONTINUE;
 }
