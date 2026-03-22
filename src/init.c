@@ -151,6 +151,7 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
         return SDL_APP_FAILURE;
     }
 
+    (*appstate) = state;
 
     return SDL_APP_CONTINUE;
 }

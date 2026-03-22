@@ -22,6 +22,7 @@ void handle_speed_multiplier(Gameplay *gameplay, SDLite_Input *input, int window
 
 int frame_events(Appstate *state){
 
+
     if(SDLite_Input_KeyPressed(state->input, SDL_SCANCODE_ESCAPE)) return 1;
 
     handle_speed_multiplier(state->gameplay, state->input, state->window_width);
