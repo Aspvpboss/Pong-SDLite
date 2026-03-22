@@ -3,6 +3,10 @@
 
 #include "SDLite.h"
 
+#define GAMEPLAY_HUD_SIZE 40
+#define GAMEPLAY_HORIZONTAL_BAR_HEIGHT 5
+
+
 typedef struct{
 
     SDLite_Text *score_text; 

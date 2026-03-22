@@ -5,10 +5,9 @@
 #include <math.h>
 
 
-#define window_start_width 1000
-#define window_start_height 800
-#define hud_size 40
-#define horizontal_bar_height 5
+#define WINDOW_START_WIDTH 1000
+#define WINDOW_START_HEIGHT 800
+
 
 typedef struct{
 
@@ -21,9 +20,6 @@ typedef struct{
 extern Gamestate gamestate;
 
 
-
-
-
 typedef struct{
 
     int window_width, window_height;
@@ -31,6 +27,7 @@ typedef struct{
     SDLite_Time *time;
     SDLite_Input *input;
 
+    Gameplay gameplay;
 
 } Appstate;
 
