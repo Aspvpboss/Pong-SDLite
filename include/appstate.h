@@ -8,7 +8,7 @@
 #define hud_size 40
 #define horizontal_bar_height 5
 
-
+ 
 
 typedef struct{
 
