@@ -27,8 +27,9 @@ Appstate* init_appstate(){
         SDLite_CreateDisplay("Pong", state->window_width, state->window_height, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
     
     if(!state->display){
+        t_free(state);
         SDL_Log("Error: %s\n", SDL_GetError());
-        return 1;
+        return NULL;
     }
 
     SDL_Window *window = SDLite_Display_GetSDLWindow(state->display);
@@ -40,19 +41,24 @@ Appstate* init_appstate(){
 
     state->time = SDLite_CreateTime(-1);
     if(!state->time){
+        SDLite_DestroyDisplay(state->display); 
+        t_free(state);
         SDL_Log("Error: %s\n", SDL_GetError());
-        return 1;
+        return NULL;
     }
 
     state->input = SDLite_CreateInput();
     if(!state->input){
+        SDLite_DestroyTime(state->time);
+        SDLite_DestroyDisplay(state->display); 
+        t_free(state);
         SDL_Log("Error: %s\n", SDL_GetError());
-        return 1;
+        return NULL;
     }
 
     srand(time(NULL));
     
-    return 0;
+    return state;
 }
 
 
