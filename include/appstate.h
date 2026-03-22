@@ -27,7 +27,7 @@ typedef struct{
     SDLite_Time *time;
     SDLite_Input *input;
 
-    Gameplay gameplay;
+    Gameplay *gameplay;
 
 } Appstate;
 
