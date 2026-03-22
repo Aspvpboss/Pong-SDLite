@@ -43,6 +43,27 @@ int init_text(Appstate *state){
 }
 
 
+int zeroing_appstate(Appstate *state){
+
+
+    return 0;
+}
+
+
+int init_appstate(Appstate *state){
+
+    state->fps_text = NULL;
+    state->input = NULL;
+    state->time = NULL;
+
+    state->display = NULL;
+    state->window_height = window_start_height;
+    state->window_width = window_start_width;
+
+    return 0;
+}
+
+
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
 
@@ -54,13 +75,6 @@ SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
     (*appstate) = t_malloc(sizeof(Appstate));
     Appstate *state = (Appstate*)(*appstate);
 
-    state->fps_text = NULL;
-    state->input = NULL;
-    state->time = NULL;
-
-    state->display = NULL;
-    state->window_height = window_start_height;
-    state->window_width = window_start_width;
     int window_width = state->window_width;
     int window_height = state->window_height;
 
