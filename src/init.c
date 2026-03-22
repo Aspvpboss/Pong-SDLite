@@ -3,17 +3,12 @@
 
 #include "init.h"
 #include "update.h"
+#include "quit.h"
 #include "SDL3/SDL_main.h"
 #include <time.h>
 
 Gamestate gamestate;
 
-
-int init_text(Appstate *state){
-
-    int window_width = state->window_width;
-    return 0;
-}
 
 
 Appstate* init_appstate(){
@@ -96,8 +91,9 @@ Gameplay* init_gameplay(Appstate *state){
 
     gameplay->ball.sprite = SDLite_Create_RectSprite((SDL_FRect){(gameplay->ball_arena.x + gameplay->ball_arena.w) / 2, (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2, 10, 10}, (SDL_Color){255, 255, 255, 255}, true);
     if(!gameplay->ball.sprite){
+        free_gameplay(gameplay); 
         SDL_Log("Error: %s\n", SDL_GetError());
-        return SDL_APP_FAILURE;
+        return NULL;
     }
 
     
@@ -108,8 +104,9 @@ Gameplay* init_gameplay(Appstate *state){
 
 
     if(!gameplay->player_one.score.score_text || !gameplay->player_two.score.score_text || !gameplay->speed_multiplier.multiplier_text || !gameplay->fps_text){
+        free_gameplay(gameplay); 
         SDL_Log("Error: %s\n", SDL_GetError());
-        return 1;
+        return NULL;
     }
 
     update_score(&gameplay->player_one.score, 0, window_width);

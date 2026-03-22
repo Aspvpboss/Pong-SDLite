@@ -107,7 +107,7 @@ int update(Appstate *state){
             center_text(gameplay->fps_text, 0, state->window_width);
         }
 
-        update_ball_position(state, state->time);
+        update_ball_position(state->gameplay, state->time);
 
     } else if(gamestate == GAME_MAIN_MENU){
 
