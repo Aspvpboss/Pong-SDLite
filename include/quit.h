@@ -3,3 +3,5 @@
 #include "appstate.h"
 
 void free_gameplay(Gameplay *gameplay);
+void free_appstate(Appstate *state);
+void free_main_menu(Main_Menu *main_menu);

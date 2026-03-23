@@ -1,7 +1,7 @@
 #ifndef APPSTATE_PONG_H
 #define APPSTATE_PONG_H
 
-#include "main_menu.h"
+#include "menus.h"
 #include "gameplay.h"
 #include "SDLite.h"
 #include <math.h>
@@ -31,6 +31,7 @@ typedef struct{
     SDLite_Input *input;
 
     Gameplay *gameplay;
+    Main_Menu *main_menu;
 
 } Appstate;
 

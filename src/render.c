@@ -5,12 +5,15 @@ int render(Appstate *state){
 
     SDLite_Display *display = state->display;
     SDL_Renderer *renderer = SDLite_Display_GetSDLRenderer(display);
+    SDL_Window *window = SDLite_Display_GetSDLWindow(display);
 
     SDLite_DisplayClear(display);
 
     if(gamestate == GAME_PLAYING){
 
         Gameplay *gameplay = state->gameplay;
+
+        SDL_SetWindowResizable(window, false);
 
         SDLite_Render_Text(gameplay->fps_text);
         SDLite_Render_Text(gameplay->player_one.score.score_text);
@@ -24,7 +27,12 @@ int render(Appstate *state){
         
     } else if(gamestate == GAME_MAIN_MENU){
 
+        Main_Menu *main_menu = state->main_menu;
 
+        SDL_SetWindowResizable(window, true);
+
+        SDLite_Render_Text(main_menu->title_text);
+        SDLite_Render_Text(main_menu->play_text);
 
     } else if(gamestate == GAME_SETTINGS){
 

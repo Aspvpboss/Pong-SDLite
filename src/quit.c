@@ -21,6 +21,18 @@ void free_appstate(Appstate *state){
     SDLite_DestroyDisplay(state->display);
     SDLite_DestroyInput(state->input);
     SDLite_DestroyTime(state->time);
+    t_free(state);
+    
+}
+
+void free_main_menu(Main_Menu *main_menu){
+
+    if(!main_menu)
+        return;
+
+    SDLite_DestroyText(main_menu->title_text);
+    SDLite_DestroyText(main_menu->play_text);
+    t_free(main_menu);
 
 }
 
@@ -30,13 +42,15 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result){
 
     Appstate *state = (Appstate*)(appstate);
 
-    if(!state)
-        return;  
+    if(!state){
+        SDLite_Quit();
+        return;
+    }
 
     free_gameplay(state->gameplay);
+    free_main_menu(state->main_menu);
     free_appstate(state);
 
-    t_free(state);
 
     SDLite_Quit();
 

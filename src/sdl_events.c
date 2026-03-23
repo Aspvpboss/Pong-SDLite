@@ -31,7 +31,9 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
         
         } else if(gamestate == GAME_MAIN_MENU){
 
-            // stuff
+            Main_Menu *main_menu = state->main_menu;
+            center_text(main_menu->title_text, state->window_height / 4 - 80, state->window_width);
+            center_text(main_menu->play_text, state->window_height / 4 - 50, state->window_width);
 
         } else if(gamestate == GAME_SETTINGS){
 
