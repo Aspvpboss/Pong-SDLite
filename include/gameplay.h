@@ -59,6 +59,7 @@ typedef struct{
     
     SDL_FRect ball_arena;
     Pong_Ball ball;
+    float display_refresh_rate; 
 
 } Gameplay;
 

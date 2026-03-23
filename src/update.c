@@ -101,7 +101,9 @@ int update(Appstate *state){
     Gameplay *gameplay = state->gameplay;
 
     if(gamestate == GAME_PLAYING){
-
+       
+        SDLite_Time_Set_FPSLimit(state->time, gameplay->display_refresh_rate);
+        
         if(SDLite_Time_Is_FPSUpdated(state->time)){
             update_fps(gameplay->fps_text, state->time);
             center_text(gameplay->fps_text, 0, state->window_width);
@@ -111,7 +113,7 @@ int update(Appstate *state){
 
     } else if(gamestate == GAME_MAIN_MENU){
 
-        // stuff
+        SDLite_Time_Set_FPSLimit(state->time, 10);
 
     } else if(gamestate == GAME_SETTINGS){
 

@@ -10,6 +10,15 @@ Gameplay* init_gameplay(Appstate *state){
     int window_width = state->window_width;
     int window_height = state->window_height;
 
+    SDL_DisplayID display_id = SDL_GetPrimaryDisplay();
+    const SDL_DisplayMode *display_mode = SDL_GetCurrentDisplayMode(display_id);
+    if(!display_mode){
+        free_gameplay(gameplay); 
+        SDL_Log("Error: %s\n", SDL_GetError());
+        return NULL;
+    }
+    gameplay->display_refresh_rate = display_mode->refresh_rate;
+
     gameplay->player_one.score.score_text = NULL;
     gameplay->player_two.score.score_text = NULL;
     gameplay->speed_multiplier.multiplier_text = NULL;

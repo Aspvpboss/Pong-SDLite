@@ -63,7 +63,7 @@ Appstate* init_appstate(){
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
 
-    gamestate = GAME_MAIN_MENU;
+    gamestate = GAME_PLAYING;
 
     if(SDLite_Init(NULL, NULL, true, false)){
         SDL_Log("Error: %s\n", SDL_GetError());
