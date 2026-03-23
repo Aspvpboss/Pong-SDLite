@@ -2,12 +2,15 @@
 
 void free_gameplay(Gameplay *gameplay){
 
+    if(!gameplay)
+        return;
+
     SDLite_DestroyText(gameplay->fps_text);
     SDLite_DestroyText(gameplay->player_one.score.score_text);
     SDLite_DestroyText(gameplay->player_two.score.score_text);
     SDLite_DestroyText(gameplay->speed_multiplier.multiplier_text);
     SDLite_DestroySprite(gameplay->ball.sprite);
-
+    t_free(gameplay);
 
 }
 

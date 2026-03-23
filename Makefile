@@ -24,11 +24,11 @@ opt: opt_build run
 
 
 debug_build:
-	@${GCC} -o ${OUT} ${SRC} -lSDLite_debug ${LINK} ${LIB} ${INCLUDE} ${W_FLAGS} ${DEBUG_FLAG}
+	@${GCC} -o ${OUT} ${SRC} -lSDLite_debug -DTRACK_ALLOCATIONS ${LINK} ${LIB} ${INCLUDE} ${W_FLAGS} ${DEBUG_FLAG}
 
 
 opt_build:
-	@${GCC} -o ${OUT} ${SRC} -lSDLite ${LINK} ${LIB} ${INCLUDE} ${W_FLAGS} ${OPT_FLAG}
+	@${GCC} -o ${OUT} ${SRC} -lSDLite -DSTDLIB_ALLOCATIONS ${LINK} ${LIB} ${INCLUDE} ${W_FLAGS} ${OPT_FLAG}
 
 
 run:
