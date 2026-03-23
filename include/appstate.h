@@ -1,13 +1,16 @@
 #ifndef APPSTATE_PONG_H
 #define APPSTATE_PONG_H
 
+#include "main_menu.h"
 #include "gameplay.h"
+#include "SDLite.h"
 #include <math.h>
 
 
 #define WINDOW_START_WIDTH 1000
 #define WINDOW_START_HEIGHT 800
-
+#define FONT_PATH "assets/default.ttf"
+#define RANDOM_RANGE(min, max) (rand() % ((max) - (min) + 1) + (min))
 
 typedef enum{
 

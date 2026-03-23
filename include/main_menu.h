@@ -5,7 +5,7 @@
 
 typedef struct{
 
-
+    SDLite_Text *title_text;
 
 } Main_Menu;
 

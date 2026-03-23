@@ -24,7 +24,7 @@ Appstate* init_appstate(){
     state->window_width = WINDOW_START_WIDTH;
 
     state->display = 
-        SDLite_CreateDisplay("Pong", state->window_width, state->window_height, SDL_WINDOW_MAXIMIZED | SDL_WINDOW_RESIZABLE);
+        SDLite_CreateDisplay("Pong", state->window_width, state->window_height, SDL_WINDOW_MAXIMIZED);
     
     if(!state->display){
         t_free(state);
@@ -33,11 +33,11 @@ Appstate* init_appstate(){
     }
 
     SDL_Window *window = SDLite_Display_GetSDLWindow(state->display);
-    SDL_SetWindowMinimumSize(window, 500, 200);
     SDL_DisplayID display_id = SDL_GetPrimaryDisplay();
     SDL_Rect display_bounds;
     SDL_GetDisplayBounds(display_id, &display_bounds);
     SDL_SetWindowMaximumSize(window, display_bounds.w, display_bounds.h); 
+    SDL_SetWindowMinimumSize(window, 500, 200);
 
     state->time = SDLite_CreateTime(-1);
     if(!state->time){
@@ -95,7 +95,15 @@ Gameplay* init_gameplay(Appstate *state){
 
     gameplay->horizontal_bar = (SDL_FRect){0, GAMEPLAY_HUD_SIZE, window_width, GAMEPLAY_HORIZONTAL_BAR_HEIGHT};
 
-    gameplay->ball.sprite = SDLite_Create_RectSprite((SDL_FRect){(gameplay->ball_arena.x + gameplay->ball_arena.w) / 2, (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2, 10, 10}, (SDL_Color){255, 255, 255, 255}, true);
+    int random_y_offset;
+    random_y_offset = RANDOM_RANGE(-10, 10);
+    SDL_FRect ball_position= {};
+    ball_position.x = (gameplay->ball_arena.x + gameplay->ball_arena.w) / 2;
+    ball_position.y = (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2 + random_y_offset;
+    ball_position.w = 10;
+    ball_position.h = 10;
+
+    gameplay->ball.sprite = SDLite_Create_RectSprite(ball_position, (SDL_Color){255, 255, 255, 255}, true);
     if(!gameplay->ball.sprite){
         free_gameplay(gameplay); 
         SDL_Log("Error: %s\n", SDL_GetError());
@@ -103,10 +111,10 @@ Gameplay* init_gameplay(Appstate *state){
     }
 
     
-    gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", "assets/default.ttf", GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->player_one.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->player_two.score.score_text = SDLite_CreateText(state->display, NULL, "assets/default.ttf", GAMEPLAY_HUD_SIZE, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_one.score.score_text = SDLite_CreateText(state->display, NULL, FONT_PATH, GAMEPLAY_HUD_SIZE, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_two.score.score_text = SDLite_CreateText(state->display, NULL, FONT_PATH, GAMEPLAY_HUD_SIZE, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
 
 
     if(!gameplay->player_one.score.score_text || !gameplay->player_two.score.score_text || !gameplay->speed_multiplier.multiplier_text || !gameplay->fps_text){
@@ -127,6 +135,11 @@ Gameplay* init_gameplay(Appstate *state){
 
     return gameplay;
 }
+
+
+
+
+
 
 
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
