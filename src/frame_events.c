@@ -34,7 +34,7 @@ int frame_events(Appstate *state){
         if(gamestate == GAME_SETTINGS) gamestate_str = "GAME_SETTINGS";
        
         SDL_Log("Debug Info:\n");
-        SDL_Log("Current heap usage: %lld bytes\n", check_memory_usage());
+        SDL_Log("Total heap usage: %lld bytes\n", check_memory_usage());
         SDL_Log("Gamestate %s", gamestate_str);
     }
     
