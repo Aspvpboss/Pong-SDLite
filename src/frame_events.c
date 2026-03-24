@@ -22,20 +22,25 @@ void handle_speed_multiplier(Gameplay *gameplay, SDLite_Input *input, int window
 
 int frame_events(Appstate *state){
 
-    if(SDLite_Input_KeyPressed(state->input, SDL_SCANCODE_ESCAPE)) return 1;
+    SDLite_Input *input = state->input;
+
+    if(SDLite_Input_KeyPressed(input, SDL_SCANCODE_ESCAPE)) return 1;
     
-    if(gamestate == GAME_PLAYING){
+    switch(gamestate){
+        case GAME_PLAYING:
+            handle_speed_multiplier(state->gameplay, input, state->window_width);
+            break;
 
-        handle_speed_multiplier(state->gameplay, state->input, state->window_width);
+        case GAME_MAIN_MENU:
+            if(SDLite_Input_KeyJustPressed(input, SDL_SCANCODE_RETURN))
+                gamestate = GAME_PLAYING;
+            break;
 
-    } else if(gamestate == GAME_MAIN_MENU){
+        case GAME_SETTINGS:
+            break;
 
-
-
-    } else if(gamestate == GAME_SETTINGS){
-
-
-
+        default:
+            break;
     }
 
     return 0;

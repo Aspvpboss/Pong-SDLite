@@ -42,14 +42,19 @@ SDL_AppResult SDL_AppIterate(void *appstate){
 
     }
 
-    if(frame_events(state))
-        return SDL_APP_SUCCESS;   
+    int result = 0;
+   
+    result = frame_events(state);
+    if(result == 1) return SDL_APP_SUCCESS;   
+    if(result == -1) return SDL_APP_CONTINUE;
 
-    if(update(state))
-        return SDL_APP_FAILURE; 
+    result = update(state);
+    if(result == 1) return SDL_APP_FAILURE; 
+    if(result == -1) return SDL_APP_CONTINUE;
 
-    if(render(state))
-        return SDL_APP_FAILURE;
+    result = render(state);
+    if(result == 1) return SDL_APP_FAILURE;
+    if(result == -1) return SDL_APP_CONTINUE;
 
 
     SDLite_Input_UpdateAllPrev(state->input);

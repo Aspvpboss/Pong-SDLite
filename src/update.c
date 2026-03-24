@@ -100,25 +100,27 @@ int update(Appstate *state){
 
     Gameplay *gameplay = state->gameplay;
 
-    if(gamestate == GAME_PLAYING){
-       
-        SDLite_Time_Set_FPSLimit(state->time, gameplay->display_refresh_rate);
-        
-        if(SDLite_Time_Is_FPSUpdated(state->time)){
-            update_fps(gameplay->fps_text, state->time);
-            center_text(gameplay->fps_text, 0, state->window_width);
-        }
+    switch(gamestate){
+        case GAME_PLAYING:
+            SDLite_Time_Set_FPSLimit(state->time, gameplay->display_refresh_rate);
+            
+            if(SDLite_Time_Is_FPSUpdated(state->time)){
+                update_fps(gameplay->fps_text, state->time);
+                center_text(gameplay->fps_text, 0, state->window_width);
+            }
 
-        update_ball_position(state->gameplay, state->time);
+            update_ball_position(state->gameplay, state->time);
+            break;
 
-    } else if(gamestate == GAME_MAIN_MENU){
+        case GAME_MAIN_MENU:
+            SDLite_Time_Set_FPSLimit(state->time, 10);
+            break;
 
-        SDLite_Time_Set_FPSLimit(state->time, 10);
+        case GAME_SETTINGS:
+            break;
 
-    } else if(gamestate == GAME_SETTINGS){
-
-        // stuff
-
+        default:
+            break;
     }
 
     

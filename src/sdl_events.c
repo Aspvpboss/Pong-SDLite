@@ -15,32 +15,33 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
         int window_width = state->window_width;
         int window_height = state->window_height;
 
-        if(gamestate == GAME_PLAYING){
+        switch(gamestate){
+            case GAME_PLAYING:
+                Gameplay *gameplay = state->gameplay;
 
-            Gameplay *gameplay = state->gameplay;
+                gameplay->ball_arena.w = window_width;
+                gameplay->ball_arena.h = window_height - GAMEPLAY_HUD_SIZE - GAMEPLAY_HORIZONTAL_BAR_HEIGHT;
 
-            gameplay->ball_arena.w = window_width;
-            gameplay->ball_arena.h = window_height - GAMEPLAY_HUD_SIZE - GAMEPLAY_HORIZONTAL_BAR_HEIGHT;
+                update_fps(gameplay->fps_text, state->time);
+                center_text(gameplay->fps_text, 0, window_width);
+                update_multiplier(gameplay, window_width); 
+                update_score(&gameplay->player_one.score, gameplay->player_one.score.score, window_width);
+                update_score(&gameplay->player_two.score, gameplay->player_two.score.score, window_width);
+                gameplay->horizontal_bar.w = window_width;
+                break;
 
-            update_fps(gameplay->fps_text, state->time);
-            center_text(gameplay->fps_text, 0, window_width);
-            update_multiplier(gameplay, window_width); 
-            update_score(&gameplay->player_one.score, gameplay->player_one.score.score, window_width);
-            update_score(&gameplay->player_two.score, gameplay->player_two.score.score, window_width);
-            gameplay->horizontal_bar.w = window_width;
-        
-        } else if(gamestate == GAME_MAIN_MENU){
+            case GAME_MAIN_MENU:
+                Main_Menu *main_menu = state->main_menu;
+                center_text(main_menu->title_text, state->window_height / 4 - 80, state->window_width);
+                center_text(main_menu->play_text, state->window_height / 4 - 50, state->window_width);
+                break;
 
-            Main_Menu *main_menu = state->main_menu;
-            center_text(main_menu->title_text, state->window_height / 4 - 80, state->window_width);
-            center_text(main_menu->play_text, state->window_height / 4 - 50, state->window_width);
+            case GAME_SETTINGS:
+                break;
 
-        } else if(gamestate == GAME_SETTINGS){
-
-            // stuff
-
+            default:
+                break;
         }
-
 
     }
 

@@ -9,38 +9,41 @@ int render(Appstate *state){
 
     SDLite_DisplayClear(display);
 
-    if(gamestate == GAME_PLAYING){
+    switch(gamestate){
 
-        Gameplay *gameplay = state->gameplay;
+        case GAME_PLAYING:
+            Gameplay *gameplay = state->gameplay;
 
-        SDL_SetWindowResizable(window, false);
+            SDL_SetWindowResizable(window, false);
 
-        SDLite_Render_Text(gameplay->fps_text);
-        SDLite_Render_Text(gameplay->player_one.score.score_text);
-        SDLite_Render_Text(gameplay->player_two.score.score_text);
-        SDLite_Render_Text(gameplay->speed_multiplier.multiplier_text);
-        SDLite_Render_Sprite(display, gameplay->ball.sprite);
+            SDLite_Render_Text(gameplay->fps_text);
+            SDLite_Render_Text(gameplay->player_one.score.score_text);
+            SDLite_Render_Text(gameplay->player_two.score.score_text);
+            SDLite_Render_Text(gameplay->speed_multiplier.multiplier_text);
+            SDLite_Render_Sprite(display, gameplay->ball.sprite);
 
-        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
-        
-        SDL_RenderFillRect(renderer, &gameplay->horizontal_bar);
-        
-    } else if(gamestate == GAME_MAIN_MENU){
+            SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
+            
+            SDL_RenderFillRect(renderer, &gameplay->horizontal_bar);
+            break;
 
-        Main_Menu *main_menu = state->main_menu;
+        case GAME_MAIN_MENU:
+            Main_Menu *main_menu = state->main_menu;
 
-        SDL_SetWindowResizable(window, true);
+            SDL_SetWindowResizable(window, true);
 
-        SDLite_Render_Text(main_menu->title_text);
-        SDLite_Render_Text(main_menu->play_text);
+            SDLite_Render_Text(main_menu->title_text);
+            SDLite_Render_Text(main_menu->play_text);
+            break;
 
-    } else if(gamestate == GAME_SETTINGS){
+        case GAME_SETTINGS:
+            break;
 
-
+        default:
+            break;
 
     }
 
-    
     SDLite_DisplayPresent(display);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 
