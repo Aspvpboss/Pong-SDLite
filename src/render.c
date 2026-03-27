@@ -21,6 +21,8 @@ int render(Appstate *state){
             SDLite_Render_Text(gameplay->player_two.score.score_text);
             SDLite_Render_Text(gameplay->speed_multiplier.multiplier_text);
             SDLite_Render_Sprite(display, gameplay->ball.sprite);
+            SDLite_Render_Sprite(display, gameplay->player_one.paddle.sprite);
+            SDLite_Render_Sprite(display, gameplay->player_two.paddle.sprite);
 
             SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);   
             

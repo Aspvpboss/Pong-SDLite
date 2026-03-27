@@ -22,6 +22,8 @@ Gameplay* init_gameplay(Appstate *state){
     gameplay->player_one.score.score_text = NULL;
     gameplay->player_two.score.score_text = NULL;
     gameplay->speed_multiplier.multiplier_text = NULL;
+    gameplay->speed_multiplier.multiplier = 1.0f;
+    gameplay->horizontal_bar = (SDL_FRect){0, GAMEPLAY_HUD_SIZE, window_width, GAMEPLAY_HORIZONTAL_BAR_HEIGHT};
 
 
     gameplay->ball_arena.x = 0;
@@ -37,22 +39,34 @@ Gameplay* init_gameplay(Appstate *state){
 
     gameplay->player_one.score.score = 0;
     gameplay->player_one.score.text_alignment = TTF_HORIZONTAL_ALIGN_LEFT;
+    gameplay->player_one.paddle.sprite = NULL;
+
     gameplay->player_two.score.score = 0;
     gameplay->player_two.score.text_alignment = TTF_HORIZONTAL_ALIGN_RIGHT;
-    gameplay->speed_multiplier.multiplier = 1.0f;
-
-    gameplay->horizontal_bar = (SDL_FRect){0, GAMEPLAY_HUD_SIZE, window_width, GAMEPLAY_HORIZONTAL_BAR_HEIGHT};
+    gameplay->player_two.paddle.sprite = NULL;
+   
 
     int random_y_offset;
-    random_y_offset = RANDOM_RANGE(-10, 10);
+    random_y_offset = RANDOM_RANGE(-30, 30);
     SDL_FRect ball_position= {};
     ball_position.x = (gameplay->ball_arena.x + gameplay->ball_arena.w) / 2;
     ball_position.y = (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2 + random_y_offset;
     ball_position.w = 10;
     ball_position.h = 10;
 
-    gameplay->ball.sprite = SDLite_Create_RectSprite(ball_position, (SDL_Color){255, 255, 255, 255}, true);
-    if(!gameplay->ball.sprite){
+    const SDL_Color WHITE = {255, 255, 255, 255};
+    SDL_FRect player_rect = {0, 0, 10, 80};
+    player_rect.x = 0;
+    player_rect.y = (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2;
+    gameplay->player_one.paddle.sprite = SDLite_Create_RectSprite(player_rect, WHITE, true);
+    gameplay->player_one.paddle.y_speed = 400;
+
+    player_rect.x = window_width - player_rect.w;
+    gameplay->player_two.paddle.sprite = SDLite_Create_RectSprite(player_rect, WHITE, true);
+    gameplay->player_two.paddle.y_speed = 400;
+
+    gameplay->ball.sprite = SDLite_Create_RectSprite(ball_position, WHITE, true);
+    if(!gameplay->ball.sprite || !gameplay->player_one.paddle.sprite || !gameplay->player_two.paddle.sprite){
         free_gameplay(gameplay); 
         SDL_Log("Error: %s\n", SDL_GetError());
         return NULL;

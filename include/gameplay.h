@@ -17,7 +17,9 @@ typedef struct{
 
 typedef struct{
 
-    char filler;
+    SDLite_Sprite *sprite;
+    double y_velocity;
+    double y_speed;
 
 } Paddle;
 

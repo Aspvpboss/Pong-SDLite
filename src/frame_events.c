@@ -20,6 +20,21 @@ void handle_speed_multiplier(Gameplay *gameplay, SDLite_Input *input, int window
 
 
 
+void handle_player_paddle(SDLite_Input *input, Paddle *paddle, SDL_Scancode up, SDL_Scancode down){
+
+    paddle->y_velocity = 0.0f;
+
+    if(SDLite_Input_KeyPressed(input, up)){
+        paddle->y_velocity = -1;
+    }
+    if(SDLite_Input_KeyPressed(input, down)){
+        paddle->y_velocity = 1;
+    }
+
+}
+
+
+
 int frame_events(Appstate *state){
 
     SDLite_Input *input = state->input;
@@ -41,6 +56,7 @@ int frame_events(Appstate *state){
     switch(gamestate){
         case GAME_PLAYING:
             handle_speed_multiplier(state->gameplay, input, state->window_width);
+            handle_player_paddle(input, &state->gameplay->player_one.paddle, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN);
             if(SDLite_Input_KeyJustPressed(input, SDL_SCANCODE_Q)){
                 gamestate = GAME_MAIN_MENU;        
                 return -1;
