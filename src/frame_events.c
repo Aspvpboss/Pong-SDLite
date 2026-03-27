@@ -56,7 +56,8 @@ int frame_events(Appstate *state){
     switch(gamestate){
         case GAME_PLAYING:
             handle_speed_multiplier(state->gameplay, input, state->window_width);
-            handle_player_paddle(input, &state->gameplay->player_one.paddle, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN);
+            handle_player_paddle(input, &state->gameplay->player_one.paddle, SDL_SCANCODE_W, SDL_SCANCODE_S);
+            handle_player_paddle(input, &state->gameplay->player_two.paddle, SDL_SCANCODE_UP, SDL_SCANCODE_DOWN);
             if(SDLite_Input_KeyJustPressed(input, SDL_SCANCODE_Q)){
                 gamestate = GAME_MAIN_MENU;        
                 return -1;

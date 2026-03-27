@@ -46,13 +46,6 @@ Gameplay* init_gameplay(Appstate *state){
     gameplay->player_two.paddle.sprite = NULL;
    
 
-    int random_y_offset;
-    random_y_offset = RANDOM_RANGE(-30, 30);
-    SDL_FRect ball_position= {};
-    ball_position.x = (gameplay->ball_arena.x + gameplay->ball_arena.w) / 2;
-    ball_position.y = (gameplay->ball_arena.y + gameplay->ball_arena.h) / 2 + random_y_offset;
-    ball_position.w = 10;
-    ball_position.h = 10;
 
     const SDL_Color WHITE = {255, 255, 255, 255};
     SDL_FRect player_rect = {0, 0, 10, 80};
@@ -65,6 +58,8 @@ Gameplay* init_gameplay(Appstate *state){
     gameplay->player_two.paddle.sprite = SDLite_Create_RectSprite(player_rect, WHITE, true);
     gameplay->player_two.paddle.y_speed = 400;
 
+    SDL_FRect ball_position = {0, 0, 10, 10};
+
     gameplay->ball.sprite = SDLite_Create_RectSprite(ball_position, WHITE, true);
     if(!gameplay->ball.sprite || !gameplay->player_one.paddle.sprite || !gameplay->player_two.paddle.sprite){
         free_gameplay(gameplay); 
@@ -72,6 +67,7 @@ Gameplay* init_gameplay(Appstate *state){
         return NULL;
     }
 
+    reset_ball(&gameplay->ball, &ball_position, &gameplay->ball_arena);
     
     gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
     gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
@@ -86,7 +82,7 @@ Gameplay* init_gameplay(Appstate *state){
     }
 
     update_score(&gameplay->player_one.score, 0, window_width);
-    update_score(&gameplay->player_two.score, 244, window_width); 
+    update_score(&gameplay->player_two.score, 0, window_width); 
 
     update_multiplier(gameplay, window_width);
 
