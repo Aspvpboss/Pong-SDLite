@@ -70,6 +70,8 @@ void reset_ball(Pong_Ball *ball, SDL_FRect *ball_rect, SDL_FRect *ball_arena){
     double y_velocity = RANDOM_RANGE(0, 1);
     if(y_velocity == 0) y_velocity = -1;
 
+    ball->x_speed = 350.0f;
+    ball->y_speed = 350.0f;
     ball->x_velocity = x_velocity;
     ball->y_velocity = y_velocity;
 
@@ -82,18 +84,23 @@ void check_ball_collision(Gameplay *gameplay, SDL_FRect *current_position, int w
 
     SDL_FRect *arena = &gameplay->ball_arena;
 
+    const int ball_x_speed_scaling = 30;
+    const int ball_y_speed_scaling = 20;
+
     SDL_FRect paddle_rect;
     SDLite_Sprite_Get_RenderRect(gameplay->player_one.paddle.sprite, &paddle_rect);
     if(SDLite_Collision_Rect(current_position, &paddle_rect)){
         current_position->x = paddle_rect.x + paddle_rect.w + current_position->w; 
         gameplay->ball.x_velocity *= -1;
-        gameplay->ball.x_speed += 1;
+        gameplay->ball.x_speed += ball_x_speed_scaling;
+        gameplay->ball.y_speed += ball_y_speed_scaling;
     }
     SDLite_Sprite_Get_RenderRect(gameplay->player_two.paddle.sprite, &paddle_rect);
     if(SDLite_Collision_Rect(current_position, &paddle_rect)){
         current_position->x = paddle_rect.x - current_position->w; 
         gameplay->ball.x_velocity *= -1;
-        gameplay->ball.x_speed += 1;
+        gameplay->ball.x_speed += ball_x_speed_scaling;
+        gameplay->ball.y_speed += ball_y_speed_scaling;
     }
     
     if(current_position->x < arena->x){

@@ -33,8 +33,6 @@ Gameplay* init_gameplay(Appstate *state){
 
     gameplay->ball.x_velocity = 1.0f;
     gameplay->ball.y_velocity = 1.0f;  
-    gameplay->ball.x_speed = 350.0f;
-    gameplay->ball.y_speed = 350.0f;
     gameplay->ball.sprite = NULL;
 
     gameplay->player_one.score.score = 0;
