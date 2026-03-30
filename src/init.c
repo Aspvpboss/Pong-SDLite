@@ -25,7 +25,7 @@ Appstate* init_appstate(){
     state->display = NULL;
     state->window_height = WINDOW_START_HEIGHT;
     state->window_width = WINDOW_START_WIDTH;
-    state->winning_score = 3;
+    state->winning_score = 10;
 
     state->display = SDLite_CreateDisplay("Pong", state->window_width, state->window_height, SDL_WINDOW_MAXIMIZED);
     

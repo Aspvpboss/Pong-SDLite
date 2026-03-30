@@ -122,21 +122,21 @@ Main_Menu* init_main_menu(Appstate *state){
 
 
 
-Win_Menu* init_win_menu(Appstate *state, int player_winning){
+Win_Menu* init_win_menu(Appstate *state){
 
     Win_Menu *win_menu = t_malloc(sizeof(Win_Menu));
     if(!win_menu) return NULL;
     const char *text_string = NULL;
 
-    if(player_winning == 1){
+    if(state->gameplay->player_one.score.score > state->gameplay->player_two.score.score){
         text_string = "Player One Wins!";
-    } else if(player_winning == 2){
+    } else{
         text_string = "Player Two Wins!";
     }
     
     const SDL_Color WHITE = {255, 255, 255, 255};
 
-    win_menu->title_text = SDLite_CreateText(state->display, text_string, FONT_PATH, 20, 0, 0, WHITE);
+    win_menu->title_text = SDLite_CreateText(state->display, text_string, FONT_PATH, 40, 0, 0, WHITE);
     if(!win_menu->title_text){
         t_free(win_menu);
         return NULL;
@@ -146,4 +146,6 @@ Win_Menu* init_win_menu(Appstate *state, int player_winning){
     win_menu->seconds_elapsed = 0.0f;
     win_menu->seconds_duration = 3.0f;
 
+
+    return win_menu;
 }

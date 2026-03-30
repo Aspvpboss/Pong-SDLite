@@ -60,6 +60,7 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result){
 
     free_gameplay(state->gameplay);
     free_main_menu(state->main_menu);
+    free_win_menu(state->win_menu);
     free_appstate(state);
 
 
