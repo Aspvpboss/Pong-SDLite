@@ -39,6 +39,15 @@ void free_main_menu(Main_Menu *main_menu){
 }
 
 
+void free_win_menu(Win_Menu *win_menu){
+
+    if(!win_menu) return;
+
+    SDLite_DestroyText(win_menu->title_text);
+    t_free(win_menu);
+
+}
+
 
 void SDL_AppQuit(void *appstate, SDL_AppResult result){
 

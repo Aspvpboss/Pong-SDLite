@@ -25,6 +25,7 @@ extern Gamestate gamestate;
 
 typedef struct{
 
+    int winning_score;
     int window_width, window_height;
     SDLite_Display *display;
     SDLite_Time *time;

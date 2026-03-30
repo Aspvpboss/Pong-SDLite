@@ -14,6 +14,8 @@ typedef struct{
 typedef struct{
 
     SDLite_Text *title_text;
+    double seconds_elapsed;
+    double seconds_duration;
 
 } Win_Menu;
 

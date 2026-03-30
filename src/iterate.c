@@ -37,6 +37,23 @@ SDL_AppResult SDL_AppIterate(void *appstate){
             }
             break;
 
+        case GAME_WIN_SCREEN:
+            if(!state->win_menu){
+                state->win_menu = init_win_menu(state, 1);
+                if(!state->win_menu)
+                    return SDL_APP_FAILURE;
+            }
+            if(state->main_menu){
+                free_main_menu(state->main_menu);
+                state->main_menu = NULL; 
+            }
+            if(state->gameplay){
+                free_gameplay(state->gameplay);
+                state->gameplay = NULL; 
+            }
+            
+            break;
+
         default:
             break;
 

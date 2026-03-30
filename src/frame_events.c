@@ -34,6 +34,19 @@ void handle_player_paddle(SDLite_Input *input, Paddle *paddle, SDL_Scancode up, 
 }
 
 
+int check_player_scores(Appstate *state){
+
+    if(state->gameplay->player_one.score.score >= state->winning_score){
+        return 1;
+    }
+    if(state->gameplay->player_two.score.score >= state->winning_score){
+        return 1;
+    }
+
+    return 0;
+}
+
+
 
 int frame_events(Appstate *state){
 
@@ -62,6 +75,11 @@ int frame_events(Appstate *state){
                 gamestate = GAME_MAIN_MENU;        
                 return -1;
             }
+            if(check_player_scores(state)){
+                gamestate = GAME_WIN_SCREEN;
+                return -1;
+            }
+
             break;
 
         case GAME_MAIN_MENU:
@@ -72,6 +90,12 @@ int frame_events(Appstate *state){
             break;
 
         case GAME_WIN_SCREEN:
+            Win_Menu *win_menu = state->win_menu;
+            win_menu->seconds_elapsed += SDLite_Time_GetDT(state->time);
+            if(win_menu->seconds_elapsed > win_menu->seconds_duration){
+                gamestate = GAME_MAIN_MENU;
+                return -1;
+            }
             break;
 
         default:

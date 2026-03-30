@@ -143,5 +143,7 @@ Win_Menu* init_win_menu(Appstate *state, int player_winning){
     }
 
     center_text(win_menu->title_text, state->window_height / 4, state->window_width);
+    win_menu->seconds_elapsed = 0.0f;
+    win_menu->seconds_duration = 3.0f;
 
 }

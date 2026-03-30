@@ -18,11 +18,14 @@ Appstate* init_appstate(){
 
     state->gameplay = NULL;
     state->main_menu = NULL;
+    state->win_menu = NULL;
+
     state->input = NULL;
     state->time = NULL;
     state->display = NULL;
     state->window_height = WINDOW_START_HEIGHT;
     state->window_width = WINDOW_START_WIDTH;
+    state->winning_score = 3;
 
     state->display = SDLite_CreateDisplay("Pong", state->window_width, state->window_height, SDL_WINDOW_MAXIMIZED);
     
