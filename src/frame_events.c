@@ -46,7 +46,7 @@ int frame_events(Appstate *state){
         const char *gamestate_str = NULL;
         if(gamestate == GAME_PLAYING) gamestate_str = "GAME_PLAYING";
         if(gamestate == GAME_MAIN_MENU) gamestate_str = "GAME_MAIN_MENU";
-        if(gamestate == GAME_SETTINGS) gamestate_str = "GAME_SETTINGS";
+        if(gamestate == GAME_WIN_SCREEN) gamestate_str = "GAME_WIN_SCREEN";
        
         SDL_Log("Debug Info:\n");
         SDL_Log("Total heap usage: %lld bytes\n", check_memory_usage());
@@ -71,7 +71,7 @@ int frame_events(Appstate *state){
             }
             break;
 
-        case GAME_SETTINGS:
+        case GAME_WIN_SCREEN:
             break;
 
         default:

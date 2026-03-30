@@ -119,3 +119,29 @@ Main_Menu* init_main_menu(Appstate *state){
 
     return main_menu;
 }
+
+
+
+Win_Menu* init_win_menu(Appstate *state, int player_winning){
+
+    Win_Menu *win_menu = t_malloc(sizeof(Win_Menu));
+    if(!win_menu) return NULL;
+    const char *text_string = NULL;
+
+    if(player_winning == 1){
+        text_string = "Player One Wins!";
+    } else if(player_winning == 2){
+        text_string = "Player Two Wins!";
+    }
+    
+    const SDL_Color WHITE = {255, 255, 255, 255};
+
+    win_menu->title_text = SDLite_CreateText(state->display, text_string, FONT_PATH, 20, 0, 0, WHITE);
+    if(!win_menu->title_text){
+        t_free(win_menu);
+        return NULL;
+    }
+
+    center_text(win_menu->title_text, state->window_height / 4, state->window_width);
+
+}

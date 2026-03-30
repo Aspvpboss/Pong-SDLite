@@ -16,7 +16,7 @@ typedef enum{
 
     GAME_PLAYING,
     GAME_MAIN_MENU,
-    GAME_SETTINGS
+    GAME_WIN_SCREEN
     
 } Gamestate;
 
@@ -32,6 +32,7 @@ typedef struct{
 
     Gameplay *gameplay;
     Main_Menu *main_menu;
+    Win_Menu *win_menu;
 
 } Appstate;
 

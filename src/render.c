@@ -38,7 +38,7 @@ int render(Appstate *state){
             SDLite_Render_Text(main_menu->play_text);
             break;
 
-        case GAME_SETTINGS:
+        case GAME_WIN_SCREEN:
             break;
 
         default:

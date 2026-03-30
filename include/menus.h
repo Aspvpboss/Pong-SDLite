@@ -11,4 +11,12 @@ typedef struct{
 } Main_Menu;
 
 
+typedef struct{
+
+    SDLite_Text *title_text;
+
+} Win_Menu;
+
+
+
 #endif

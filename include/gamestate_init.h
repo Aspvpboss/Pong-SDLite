@@ -9,6 +9,7 @@
 
 Gameplay* init_gameplay(Appstate *state);
 Main_Menu* init_main_menu(Appstate *state);
+Win_Menu* init_win_menu(Appstate *state, int player_winning);
 
 
 #endif

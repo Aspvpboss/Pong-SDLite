@@ -202,7 +202,7 @@ int update(Appstate *state){
             SDLite_Time_Set_FPSLimit(time, 10);
             break;
 
-        case GAME_SETTINGS:
+        case GAME_WIN_SCREEN:
             break;
 
         default:

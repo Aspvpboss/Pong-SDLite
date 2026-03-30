@@ -36,7 +36,7 @@ SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event){
                 center_text(main_menu->play_text, state->window_height / 4 - 20, state->window_width);
                 break;
 
-            case GAME_SETTINGS:
+            case GAME_WIN_SCREEN:
                 break;
 
             default:
