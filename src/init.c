@@ -40,7 +40,7 @@ Appstate* init_appstate(){
     SDL_Rect display_bounds;
     SDL_GetDisplayBounds(display_id, &display_bounds);
     SDL_SetWindowMaximumSize(window, display_bounds.w, display_bounds.h); 
-    SDL_SetWindowMinimumSize(window, 800, 350);
+    SDL_SetWindowMinimumSize(window, 800, 400);
 
     state->time = SDLite_CreateTime(-1);
     if(!state->time){

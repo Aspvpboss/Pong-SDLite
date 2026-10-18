@@ -111,7 +111,7 @@ Main_Menu* init_main_menu(Appstate *state){
         return NULL;
     }
 
-    center_text(main_menu->title_text, state->window_height / 4 - 80, state->window_width);
+    center_text(main_menu->title_text, state->window_height / 2 - 100, state->window_width);
 
     const char *play_string = "Press Enter to Play";
     main_menu->play_text = SDLite_CreateText(state->display, play_string, FONT_PATH, 50, 0, 0, (SDL_Color){255, 255, 255, 255});
@@ -121,7 +121,7 @@ Main_Menu* init_main_menu(Appstate *state){
         return NULL;
     }
 
-    center_text(main_menu->play_text, state->window_height / 2 - 20, state->window_width);
+    center_text(main_menu->play_text, state->window_height / 2 + 20, state->window_width);
 
     return main_menu;
 }
