@@ -6,8 +6,8 @@ void center_text(SDLite_Text *text, int y, int window_width){
 
     SDL_FRect render_rect = {0};
     SDLite_Text_Get_RenderRect(text, &render_rect);
-    SDLite_Text_SetPosition(text, (window_width - render_rect.w) / 4, y);
-    
+    SDLite_Text_SetPosition(text, (window_width - render_rect.w) / 2, y);
+
 }
 
 
@@ -28,7 +28,7 @@ void update_multiplier(Gameplay *gameplay, int window_width){
     
     SDLite_Text_SetString(gameplay->speed_multiplier.multiplier_text, multiplier_string);
 
-    center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 4, window_width); 
+    center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 2, window_width); 
 }
 
 
@@ -49,10 +49,9 @@ void update_score(Score *player_score, int new_score, int window_width){
 
         int width;
         TTF_GetStringSize(SDLite_Text_GetTTFFont(player_score->score_text), score_string, 0, &width, NULL);
-        SDLite_Text_SetPosition(player_score->score_text, window_width / 2 - width / 2, 2);
+        SDLite_Text_SetPosition(player_score->score_text, window_width - width, 2);
 
     }
-
 
 }
 
