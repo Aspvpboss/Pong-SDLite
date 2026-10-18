@@ -1,7 +1,7 @@
 #ifndef GAMEPLAY_H
 #define GAMEPLAY_H
 
-#include "SDLite.h"
+#include <SDLite/SDLite.h>
 
 #define GAMEPLAY_HUD_SIZE 40
 #define GAMEPLAY_HORIZONTAL_BAR_HEIGHT 5

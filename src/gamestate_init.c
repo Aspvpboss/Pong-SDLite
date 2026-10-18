@@ -1,6 +1,12 @@
 #include "gamestate_init.h"
 
 
+
+static int init_gui() {
+
+}
+
+
 Gameplay* init_gameplay(Appstate *state){
 
     Gameplay *gameplay = t_malloc(sizeof(Gameplay));
@@ -85,7 +91,7 @@ Gameplay* init_gameplay(Appstate *state){
     update_multiplier(gameplay, window_width);
 
     center_text(gameplay->fps_text, 0, window_width);
-    center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 4, window_width);
+    center_text(gameplay->speed_multiplier.multiplier_text, GAMEPLAY_HUD_SIZE / 2, window_width);
 
 
 
@@ -115,7 +121,7 @@ Main_Menu* init_main_menu(Appstate *state){
         return NULL;
     }
 
-    center_text(main_menu->play_text, state->window_height / 4 - 20, state->window_width);
+    center_text(main_menu->play_text, state->window_height / 2 - 20, state->window_width);
 
     return main_menu;
 }

@@ -1,7 +1,7 @@
 #ifndef MENUS_H
 #define MENUS_H
 
-#include "SDLite.h"
+#include <SDLite/SDLite.h>
 
 typedef struct{
 
