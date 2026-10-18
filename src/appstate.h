@@ -1,10 +1,10 @@
 #ifndef APPSTATE_PONG_H
 #define APPSTATE_PONG_H
 
+#include <SDLite/SDLite.h>
+#include <math.h>
 #include "menus.h"
 #include "gameplay.h"
-#include "SDLite.h"
-#include <math.h>
 
 
 #define WINDOW_START_WIDTH 1000

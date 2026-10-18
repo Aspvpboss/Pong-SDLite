@@ -62,7 +62,7 @@ int frame_events(Appstate *state){
         if(gamestate == GAME_WIN_SCREEN) gamestate_str = "GAME_WIN_SCREEN";
        
         SDL_Log("Debug Info:\n");
-        SDL_Log("Total heap usage: %lld bytes\n", check_memory_usage());
+        SDL_Log("Total heap usage: %lld bytes\n", MemTrack_Memory_Usage());
         SDL_Log("Gamestate %s", gamestate_str);
     }
     
