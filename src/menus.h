@@ -7,6 +7,7 @@ typedef struct{
 
     SDLite_Text *title_text;
     SDLite_Text *play_text;
+    SDLite_Text_Font *font;
 
 } Main_Menu;
 
@@ -14,6 +15,7 @@ typedef struct{
 typedef struct{
 
     SDLite_Text *title_text;
+    SDLite_Text_Font *font;
     double seconds_elapsed;
     double seconds_duration;
 

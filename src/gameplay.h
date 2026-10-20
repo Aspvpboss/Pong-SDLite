@@ -54,10 +54,12 @@ typedef struct{
 
     Player player_one;
     Player player_two;
+    Speed_Multiplier speed_multiplier;
 
     SDL_FRect horizontal_bar;
     SDLite_Text *fps_text;
-    Speed_Multiplier speed_multiplier;
+    SDLite_Text_Font *score_font; 
+    SDLite_Text_Font *center_gui_font; 
     
     SDL_FRect ball_arena;
     Pong_Ball ball;

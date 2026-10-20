@@ -2,14 +2,10 @@
 
 
 
-static int init_gui() {
-
-}
-
 
 Gameplay* init_gameplay(Appstate *state){
 
-    Gameplay *gameplay = t_malloc(sizeof(Gameplay));
+    Gameplay *gameplay = t_calloc(1, sizeof(Gameplay));
     if(!gameplay) return NULL;
 
     
@@ -67,21 +63,29 @@ Gameplay* init_gameplay(Appstate *state){
     gameplay->ball.sprite = SDLite_Create_RectSprite(ball_position, WHITE, true);
     if(!gameplay->ball.sprite || !gameplay->player_one.paddle.sprite || !gameplay->player_two.paddle.sprite){
         free_gameplay(gameplay); 
-        SDL_Log("Error: %s\n", SDL_GetError());
+        SDL_Log("Error: %s\n", SDLite_GetError());
         return NULL;
     }
 
     reset_ball(&gameplay->ball, &ball_position, &gameplay->ball_arena);
-    
-    gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", FONT_PATH, GAMEPLAY_HUD_SIZE / 2, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->player_one.score.score_text = SDLite_CreateText(state->display, NULL, FONT_PATH, GAMEPLAY_HUD_SIZE, 0, 0, (SDL_Color){255, 255, 255, 255});
-    gameplay->player_two.score.score_text = SDLite_CreateText(state->display, NULL, FONT_PATH, GAMEPLAY_HUD_SIZE, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
+   
+    gameplay->score_font = SDLite_Create_Text_Font(FONT_PATH, GAMEPLAY_HUD_SIZE);
+    gameplay->center_gui_font = SDLite_Create_Text_Font(FONT_PATH, GAMEPLAY_HUD_SIZE / 2);
+    if(!gameplay->score_font || !gameplay->center_gui_font){
+        free_gameplay(gameplay); 
+        SDL_Log("Error: %s\n", SDLite_GetError());
+        return NULL;
+    }
+
+    gameplay->fps_text = SDLite_CreateText(state->display, "FPS: 0", gameplay->center_gui_font, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->speed_multiplier.multiplier_text = SDLite_CreateText(state->display, "x1.0", gameplay->center_gui_font, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_one.score.score_text = SDLite_CreateText(state->display, NULL, gameplay->score_font, 0, 0, (SDL_Color){255, 255, 255, 255});
+    gameplay->player_two.score.score_text = SDLite_CreateText(state->display, NULL, gameplay->score_font, window_width / 2 - GAMEPLAY_HUD_SIZE, 0, (SDL_Color){255, 255, 255, 255});
 
 
     if(!gameplay->player_one.score.score_text || !gameplay->player_two.score.score_text || !gameplay->speed_multiplier.multiplier_text || !gameplay->fps_text){
         free_gameplay(gameplay); 
-        SDL_Log("Error: %s\n", SDL_GetError());
+        SDL_Log("Error: %s\n", SDLite_GetError());
         return NULL;
     }
 
@@ -104,20 +108,27 @@ Main_Menu* init_main_menu(Appstate *state){
     Main_Menu *main_menu = t_malloc(sizeof(Main_Menu));
     if(!main_menu) return NULL;
 
-    main_menu->title_text = SDLite_CreateText(state->display, "PONG", FONT_PATH, 100, 0, 0, (SDL_Color){255, 255, 255, 255});
+    main_menu->font = SDLite_Create_Text_Font(FONT_PATH, 60);
+    if(!main_menu->font){
+        free_main_menu(main_menu); 
+        SDL_Log("Error: %s\n", SDLite_GetError());
+        return NULL;
+    }
+
+    main_menu->title_text = SDLite_CreateText(state->display, "PONG", main_menu->font, 0, 0, (SDL_Color){255, 255, 255, 255});
     if(!main_menu->title_text){
         free_main_menu(main_menu); 
-        SDL_Log("Error: %s\n", SDL_GetError());
+        SDL_Log("Error: %s\n", SDLite_GetError());
         return NULL;
     }
 
     center_text(main_menu->title_text, state->window_height / 2 - 100, state->window_width);
 
     const char *play_string = "Press Enter to Play";
-    main_menu->play_text = SDLite_CreateText(state->display, play_string, FONT_PATH, 50, 0, 0, (SDL_Color){255, 255, 255, 255});
+    main_menu->play_text = SDLite_CreateText(state->display, play_string, main_menu->font, 0, 0, (SDL_Color){255, 255, 255, 255});
     if(!main_menu->play_text){
         free_main_menu(main_menu); 
-        SDL_Log("Error: %s\n", SDL_GetError());
+        SDL_Log("Error: %s\n", SDLite_GetError());
         return NULL;
     }
 
@@ -142,7 +153,14 @@ Win_Menu* init_win_menu(Appstate *state){
     
     const SDL_Color WHITE = {255, 255, 255, 255};
 
-    win_menu->title_text = SDLite_CreateText(state->display, text_string, FONT_PATH, 40, 0, 0, WHITE);
+    win_menu->font = SDLite_Create_Text_Font(FONT_PATH, 40);
+    if(!win_menu->font){
+        t_free(win_menu);
+        SDL_Log("Error: %s\n", SDLite_GetError());
+        return NULL;
+    }
+
+    win_menu->title_text = SDLite_CreateText(state->display, text_string, win_menu->font, 0, 0, WHITE);
     if(!win_menu->title_text){
         t_free(win_menu);
         return NULL;

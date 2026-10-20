@@ -9,6 +9,8 @@ void free_gameplay(Gameplay *gameplay){
     SDLite_DestroyText(gameplay->player_one.score.score_text);
     SDLite_DestroyText(gameplay->player_two.score.score_text);
     SDLite_DestroyText(gameplay->speed_multiplier.multiplier_text);
+    SDLite_Destroy_Text_Font(&gameplay->score_font);
+    SDLite_Destroy_Text_Font(&gameplay->center_gui_font);
     SDLite_DestroySprite(gameplay->ball.sprite);
     SDLite_DestroySprite(gameplay->player_one.paddle.sprite);
     SDLite_DestroySprite(gameplay->player_two.paddle.sprite);
@@ -34,6 +36,7 @@ void free_main_menu(Main_Menu *main_menu){
 
     SDLite_DestroyText(main_menu->title_text);
     SDLite_DestroyText(main_menu->play_text);
+    SDLite_Destroy_Text_Font(&main_menu->font);
     t_free(main_menu);
 
 }
@@ -44,6 +47,7 @@ void free_win_menu(Win_Menu *win_menu){
     if(!win_menu) return;
 
     SDLite_DestroyText(win_menu->title_text);
+    SDLite_Destroy_Text_Font(&win_menu->font);
     t_free(win_menu);
 
 }
